@@ -1,0 +1,1 @@
+https://docs.microsoft.com/en-us/learn/modules/build-api-azure-functions/11-function-security
