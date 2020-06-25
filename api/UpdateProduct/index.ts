@@ -1,18 +1,15 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { CosmosClient } from "@azure/cosmos";
-import { Constants } from "../constants";
 
 const httpTrigger: AzureFunction = async function(
   context: Context,
   req: HttpRequest
 ): Promise<void> {
   try {
-    const { endpoint, key, databaseId, containerId } = Constants.config;
-
-    const client = new CosmosClient({ endpoint, key });
-    
-    const database = client.database(databaseId);
-    const container = database.container(containerId);
+    const { ENDPOINT, KEY, DATABASE, CONTAINER} = process.env;
+    const client = new CosmosClient({ endpoint: ENDPOINT, key: KEY });
+    const database = client.database(DATABASE);
+    const container = database.container(CONTAINER);
     
     const product = req.body;
     const { id, brand } = product;

@@ -1,7 +1,6 @@
 import { CosmosClient } from "@azure/cosmos";
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { Constants } from "../constants";
-import { SeedData } from "../seed-data";
+import { SeedData } from "../data/seed-data";
 import { DbContext } from "../data/db-context";
 
 const httpTrigger: AzureFunction = async function (
@@ -9,14 +8,16 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   try {
-    const { endpoint, key, databaseId, containerId, partitionKey} = Constants.config;
+    const { ENDPOINT, KEY, DATABASE, CONTAINER, PARTITION_KEY} = process.env;
 
-    const client = new CosmosClient({ endpoint, key });
+    const client = new CosmosClient({ endpoint: ENDPOINT, key: KEY });
 
-    const database = client.database(databaseId);
-    const container = database.container(containerId);
+    const database = client.database(DATABASE);
+    const container = database.container(CONTAINER);
 
-    await DbContext.create(client, databaseId, containerId, partitionKey);
+    let partition_key =JSON.parse(PARTITION_KEY);
+
+    await DbContext.create(client, DATABASE, CONTAINER, partition_key);
 
     let iterator = container.items.readAll();
     let { resources } = await iterator.fetchAll();
