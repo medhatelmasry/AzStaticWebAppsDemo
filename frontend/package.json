@@ -5,6 +5,7 @@
     "main": "index.html",
     "scripts": {
       "start": "npx serve",
-      "build" : "mkdir dist && cp index.js dist/ && cp index.html dist" 
+      "winbuild": "mkdir dist && copy index.html dist && copy index.js dist",
+      "build" : "mkdir dist && cp index.js dist/index.js && cp index.html dist/index.html" 
     }
   }
