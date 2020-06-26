@@ -1,6 +1,7 @@
 (function() {
   //const API = "http://127.0.0.1:7071/api";
-  const API = "http://localhost:7071/api";
+  //const API = "http://localhost:7071/api";
+  const API = "/api";
   const KEY = "";
 
   // axios defaults
